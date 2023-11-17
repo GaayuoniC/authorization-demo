@@ -15,7 +15,7 @@ app.get("/", (_, res) => {
 
 app.get("/profile", ClerkExpressRequireAuth(), (req, res) => {
   console.log(req.auth);
-  return res.json({ name: "Ralf", age: 55, city: "Bonn" });
+  return res.json({ name: "Christian", age: 200, city: "Tamale" });
 });
 
 app.listen(port, () => {
