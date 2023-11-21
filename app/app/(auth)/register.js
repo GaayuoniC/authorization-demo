@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Pressable } from "react-native";
-import { baseStyles, palette } from "../styles/styles";
+import { baseStyles, palette } from "../../styles/styles";
 import { useState } from "react";
 
 function RegisterPage() {

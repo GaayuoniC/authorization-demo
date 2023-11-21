@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import { baseStyles, palette } from "../styles/styles";
+import { baseStyles, palette } from "../../styles/styles";
 import { useState, useCallback } from "react";
 import { useFocusEffect } from "expo-router";
 import axios from "axios";

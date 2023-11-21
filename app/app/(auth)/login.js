@@ -1,13 +1,17 @@
-import { View, Text, Pressable } from "react-native";
-import { baseStyles, palette } from "../styles/styles";
+import { View, Text, Pressable, Alert } from "react-native";
+import { baseStyles, palette } from "../../styles/styles";
 import { useState } from "react";
 import { TextInput } from "react-native";
+import { useSignIn, useUser } from "@clerk/clerk-expo";
+import { router } from "expo-router";
 
 function LoginPage() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const { signIn, setActive, isLoaded } = useSignIn();
+  const { isSignedIn } = useUser();
 
   function handleChange(element, value) {
     setFormData((prev) => {
@@ -18,7 +22,21 @@ function LoginPage() {
     });
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
+    if (!isLoaded) {
+      return;
+    }
+    try {
+      const completeSignIn = await signIn.create({
+        identifier: formData.email,
+        password: formData.password,
+      });
+      await setActive({ session: completeSignIn.createdSessionId });
+      router.replace("/");
+    } catch (error) {
+      Alert.alert("Error");
+    }
+
     console.log(formData);
     setFormData({
       email: "",

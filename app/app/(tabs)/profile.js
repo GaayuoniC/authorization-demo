@@ -1,8 +1,9 @@
-import { View, Text } from "react-native";
-import { baseStyles, palette } from "../styles/styles";
+import { View, Text, Pressable } from "react-native";
+import { baseStyles, palette } from "../../styles/styles";
 import { useState, useCallback } from "react";
 import { useFocusEffect } from "expo-router";
 import axios from "axios";
+import { useAuth } from "@clerk/clerk-expo";
 
 const apiUrl = "http://localhost:3000/profile";
 
@@ -18,6 +19,7 @@ function ProfilePage() {
         try {
           const { data } = await axios.get(apiUrl, {
             signal: controller.signal,
+            headers: `Bearer ${await getToken()}`,
           });
           setApiData(data);
           setError("");
@@ -85,6 +87,13 @@ function ProfilePage() {
           <Text style={[baseStyles.text]}>{JSON.stringify(apiData)}</Text>
         )}
       </View>
+      <Pressable
+        onPress={() => {
+          signedOut();
+        }}
+      >
+        <Text> Log out </Text>
+      </Pressable>
     </View>
   );
 }
